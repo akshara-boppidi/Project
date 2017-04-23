@@ -70,12 +70,12 @@ public class InforCpu {
     try {
         for (int i = 6; i < array.size(); i++) {
           //To eliminate spaces and seperate them with comma we use replace function 
-          String val = array.get(i);
-          val = val.replace(" ", ",");  val = val.replace(",,", ",");
-          val = val.replace(",,", ","); val = val.replace(",,", ","); 
-          val = val.replace(",,", ","); val = val.replace(",,", ",");
-          val = val.replace(",,", ","); val = val.replace(",,", ",");
-          String basicValues[] = val.split(",");
+          String value = array.get(i);
+          value = value.replace(" ", ",");  value = value.replace(",,", ",");
+          value = value.replace(",,", ","); value = value.replace(",,", ","); 
+          value = value.replace(",,", ","); value = value.replace(",,", ",");
+          value = value.replace(",,", ","); value = value.replace(",,", ",");
+          String basicValues[] = value.split(",");
           BasicInfo basicInfo = new BasicInfo();
           // sets process info ID if the value matches
           for (int j = 0; j < basicValues.length; j++) {
@@ -122,8 +122,11 @@ public class InforCpu {
     LOGGER.debug("Class InformationOfCPU : setBasicStats(): ends");
     return basicInfoList;
   }
-  
-   public List<NetworkInfo> networkStats(String query) {
+  /*
+  This method executes the command "netstat -e -p -at" at the run time and 
+  obtains the network information of CPU and stores it in buffered reader.
+  */
+   public List<NetworkInfo> networkInfo(String query) {
     LOGGER.debug("InformationOfCPU: networkInfo(): starts");
     String status = "";
     try {
@@ -146,12 +149,71 @@ public class InforCpu {
         networkInformationList = setUdpNetworkInfo(networkInformantion);
       }
       db = new Database();
-      status = db.saveNetworkInformation(networkInformationList);
+      status = db.saveNetworkInfo(networkInformationList);
       LOGGER.debug("InformationOfCPU : networkInfo(): ends");
       return networkInformationList;
     } catch (Exception e) {
       return null;
     }
+  }
+   
+   /*
+   This method takes the data from the buffered reader and thr spaces are
+   eliminated and the values are sent to the class.
+   */
+    private List<NetworkInfo> setNetworkInfo(List<String> array) {
+    LOGGER.debug("InformationOfCPU : setNetworkInfo(): starts");
+    List<NetworkInfo> networkInformationList = new ArrayList<>();
+    for (int i = 6; i < array.size(); i++) {
+      String value = array.get(i);
+      value = value.replace(" ", ",");  value = value.replace(",,", ",");
+      value = value.replace(",,", ","); value = value.replace(",,", ",");
+      value = value.replace(",,", ","); value = value.replace(",,", ",");
+      value = value.replace(",,", ","); value = value.replace(",,", ",");
+      value = value.replace(",,", ",");
+      String networkValues[] = value.split(",");
+      NetworkInfo nwinfo = new NetworkInfo();
+      for (int j = 0; j < networkValues.length; j++) {
+        if (j % networkValues.length == 0) {
+          String protocol = null;
+          String query = networkValues[j];
+          // coverting from cp to tcp
+          if ("cp".equalsIgnoreCase(query)) {
+            protocol = "tcp";
+          }
+          // converting from cp to tcp6
+          if ("cp6".equals(query)) {
+            protocol = "tcp6";
+          }
+          nwinfo.setNetworkInfo_Protocol(protocol);
+        }
+        if (j % networkValues.length == 1) {
+          nwinfo.setNetworkInfo_BandWidthSent(Double.parseDouble(networkValues[j]));
+        }
+        if (j % networkValues.length == 2) {
+          nwinfo.setNetworkInfo_BandWidthReceived(Double.parseDouble(networkValues[j]));
+        }
+        if (j % networkValues.length == 3) {
+          nwinfo.setNetworkInfo_Status(networkValues[j]);
+        }
+        if (j % networkValues.length == 4) {
+          nwinfo.setNetworkInfo_User(networkValues[j]);
+        }
+        //return values are split.
+        if (j % networkValues.length == 5) {
+          String dummy[] = new String[3];
+          dummy[0] = networkValues[j];
+          dummy = dummy[0].split("/");
+          if (dummy[0].equals("-")) {
+            dummy[0] = "0";
+          }
+          nwinfo.setNetworkInfo_PID(Integer.parseInt(dummy[0]));
+        }
+      }
+      networkInformationList.add(nwinfo);
+    }
+    LOGGER.debug("CpuInfo: setNetworkStats(): ends");
+    return networkInformationList;
   }
    
 }
