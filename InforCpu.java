@@ -30,19 +30,18 @@ public class InforCpu {
    and display the necessary information
    */
   public List<BasicInfo> getCpu(String query) {
-    LOGGER.debug("InformationCPU: Fetching CPU Information , getCpu() : starts");
+    LOGGER.debug("InformationOfCPU: Fetching CPU Information , getCpu() : starts");
     String status = "";
     List basicInfoList = null;
     try {
       if (query.equals("top -b")) {
-        // start up the command in child process
+        // runs thecommand in child process
         String Infocpu;
         Process childthread = Runtime.getRuntime().exec(query);
-        BufferedReader input = new BufferedReader(new InputStreamReader(childthread.getInputStream()));
-        
+        BufferedReader entry = new BufferedReader(new InputStreamReader(childthread.getInputStream()));
         List<String> cpuStatusArray = new ArrayList();
-        for (int i = 0; i < input.read(); i++) {
-          Infocpu = input.readLine();
+        for (int i = 0; i < entry.read(); i++) {
+          Infocpu = entry.readLine();
           cpuStatusArray.add(Infocpu);
         }
         //The information of cpu is stored in basicInfoList by splitting individually
@@ -52,7 +51,7 @@ public class InforCpu {
       } else {
         LOGGER.error("please enter correct shell command");
       }
-      LOGGER.debug("InformationCPU: Fetching CPU Information , getCpu() : ends");
+      LOGGER.debug("InformationOfCPU: Fetching CPU Information , getCpu() : ends");
       return basicInfoList;
     } catch (Exception cpuinformation) {
       LOGGER.error("exception at getCpu() " + cpuinformation.getMessage());
@@ -66,7 +65,7 @@ public class InforCpu {
   */
    
   private List<BasicInfo> setBasicStats(List<String> array) {
-    LOGGER.debug("CpuInfo:  setBasicStats(): Starts");
+    LOGGER.debug("InformationOfCPU:  setBasicStats(): Starts");
     List<BasicInfo> basicInfoList = new ArrayList<>();
     try {
         for (int i = 6; i < array.size(); i++) {
@@ -84,50 +83,75 @@ public class InforCpu {
                   if (basicValues[0].equals("")) {
                       j = j + 1;
                   }
-                  basicInfo.setPInfo_PID(Integer.parseInt(basicValues[j]));
+                  basicInfo.setBasicInfo_PID(Integer.parseInt(basicValues[j]));
               }
               // sets user if the value matches.
               if (j % basicValues.length == 1) {
                   if (basicValues[0].equals("")) {
                       j = j + 1;
                   }
-                  basicInfo.setPInfo_Usrname(basicValues[j]);
+                  basicInfo.setBasicInfo_Usrname(basicValues[j]);
               }
                //sets percentage of CPU used.
               if (j % basicValues.length == 2) {
                   if (basicValues[0].equals("")) {
                       j = j + 1;
                   }
-                  basicInfo.setPInfo_PercentageCpuUsage(Double.parseDouble(basicValues[j]));
+                  basicInfo.setBasicInfo_PercentageCpuUsage(Double.parseDouble(basicValues[j]));
               }
               //sets precentage of memory values
               if (j % basicValues.length == 3) {
                   if (basicValues[0].equals("")) {
                       j = j + 1;
                   }
-                  basicInfo.setPInfo_PercentageMemUsage(Double.parseDouble(basicValues[j]));
+                  basicInfo.setBasicInfo_PercentageMemUsage(Double.parseDouble(basicValues[j]));
               }
               // sets time
               if (j % basicValues.length == 4) {
                   if (basicValues[0].equals("")) {
                       j = j + 1;
                   }
-                  basicInfo.setPInfo_TIME(basicValues[j]);
+                  basicInfo.setBasicInfo_TIME(basicValues[j]);
               }
           }
           basicInfoList.add(basicInfo);
         }
     } catch (Exception setbasicstats) {
-      LOGGER.error("exception occured" + setprocessstats.getMessage());
+      LOGGER.error("exception occured" + setbasicstats.getMessage());
     }
-    LOGGER.debug("Class Informationcpu: setBasicStats(): ends");
+    LOGGER.debug("Class InformationOfCPU : setBasicStats(): ends");
     return basicInfoList;
   }
   
    public List<NetworkInfo> networkStats(String query) {
-    LOGGER.debug("CpuInformation: networkInfo(): starts");
+    LOGGER.debug("InformationOfCPU: networkInfo(): starts");
     String status = "";
-   return null;
+    try {
+      Process childthread = Runtime.getRuntime().exec(query);
+      InputStream childthreadResult = childthread.getInputStream();
+      // assigning child thread result to parent as a Entry.
+      InputStreamReader parentEntry = new InputStreamReader(childthreadResult);
+      BufferedReader readParentEntry = new BufferedReader(parentEntry);
+      String Infocpu;
+      // read the child process output
+      List<String> networkInformation = new ArrayList();
+      for (int i = 0; i < readParentEntry.read(); i++) {
+        Infocpu = readParentEntry.readLine();
+        networkInformation.add(Infocpu);
+      }
+      List networkInformationList;
+      if ("netstat -e -p -at".equals(query)) {
+        networkInformationList = setNetworkInfo(networkInformation);
+      } else {
+        networkInformationList = setUdpNetworkInfo(networkInformantion);
+      }
+      db = new Database();
+      status = db.saveNetworkInformation(networkInformationList);
+      LOGGER.debug("InformationOfCPU : networkInfo(): ends");
+      return networkInformationList;
+    } catch (Exception e) {
+      return null;
+    }
   }
    
 }
