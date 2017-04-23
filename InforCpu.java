@@ -158,7 +158,7 @@ public class InforCpu {
   }
    
    /*
-   This method takes the data from the buffered reader and thr spaces are
+   This method takes the data from the buffered reader and the spaces are
    eliminated and the values are sent to the class.
    */
     private List<NetworkInfo> setNetworkInfo(List<String> array) {
@@ -216,4 +216,61 @@ public class InforCpu {
     return networkInformationList;
   }
    
+  /*
+    This method takes the data from the buffered reader when query 
+    "netstat -au -e -p" is executed at the runtime and thr spaces are
+    eliminated and the values are sent to the class.
+    
+  */  
+  private List<NetworkInfo> setUdpNetworkInfo(List<String> array) {
+    LOGGER.debug("InformationOfCPU : setNetworkInfo(): starts");
+    List<NetworkInfo> networkInformationList = new ArrayList<>();
+    for (int i = 6; i < array.size(); i++) {
+      String value = array.get(i);
+      // replaces spaces with commas
+      value = value.replace(" ", ",");  value = value.replace(",,", ",");
+      value = value.replace(",,", ","); value = value.replace(",,", ",");
+      value = value.replace(",,", ","); value = value.replace(",,", ",");
+      value = value.replace(",,", ","); value = value.replace(",,", ",");
+      value = value.replace(",,", ",");
+      String networkValues[] = value.split(",");
+      NetworkInfo nwinfo = new NetworkInfo();
+      for (int j = 0; j < networkValues.length; j++) {
+        if (j % networkValues.length == 0) {
+          String protocol = null;
+          String query = networkValues[j];
+          // converting from dp to udp
+          if ("dp".equalsIgnoreCase(query)) {
+            protocol = "udp";
+          }
+          // converting from dp6 to udp6
+          if ("dp6".equals(query)) {
+            protocol = "udp6";
+          }
+          nwinfo.setNetworkInfo_Protocol(protocol);
+        }
+        if (j % networkValues.length == 1) {
+          nwinfo.setNetworkInfo_BandWidthSent(Double.parseDouble(networkValues[j]));
+        }
+        if (j % networkValues.length == 2) {
+          nwinfo.setNetworkInfo_BandWidthReceived(Double.parseDouble(networkValues[j]));
+        }
+        if (j % networkValues.length == 4) {
+          nwinfo.setNetworkInfo_User(networkValues[j]);
+        }
+        if (j % networkValues.length == 6) {
+          String dummy[] = new String[3];
+          dummy[0] = networkValues[j];
+          dummy = dummy[0].split("/");
+          if (dummy[0].equals("-")) {
+            dummy[0] = "0";
+          }
+          nwinfo.setNetworkInfo_PID(Integer.parseInt(dummy[0]));
+        }
+      }
+      networkInformationList.add(nwinfo);
+    }
+    LOGGER.debug("InfromationOfCPU : setNetworkStats(): ends");
+    return networkInformationList;
+  }
 }
