@@ -7,7 +7,9 @@ package com.mscs710.taskmanager;
 
 import Databaseconnectivity.Database;
 import com.mscs710.taskmanager.StatsInfo.BasicInfo;
+import com.mscs710.taskmanager.StatsInfo.NetworkInfo;
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -120,6 +122,12 @@ public class InforCpu {
     }
     LOGGER.debug("Class Informationcpu: setBasicStats(): ends");
     return basicInfoList;
+  }
+  
+   public List<NetworkInfo> networkStats(String query) {
+    LOGGER.debug("CpuInformation: networkInfo(): starts");
+    String status = "";
+   return null;
   }
    
 }
