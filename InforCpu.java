@@ -91,7 +91,7 @@ public class InforCpu {
                   if (basicValues[0].equals("")) {
                       j = j + 1;
                   }
-                  basicInfo.setBasicInfo_Usrname(basicValues[j]);
+                  basicInfo.setBasicInfo_Usrquery(basicValues[j]);
               }
                //sets percentage of CPU used.
               if (j % basicValues.length == 2) {
@@ -300,12 +300,69 @@ public class InforCpu {
       List iOInformationList = setIOInfo(iOInfo);
       db = new Database();
       status = db.saveIOInfo(iOInformationList);
-      LOGGER.debug("InformationOfCPU : iOStats(): Ends ");
+      LOGGER.debug("InformationOfCPU : ioinfos(): Ends ");
       return iOInformationList;
     } catch (Exception ioinfo) {
       LOGGER.error("InformationOfCPU : error at iOInfo()" + ioinfo.getMessage());
       return null;
     }
   }
+  
+  /*
+    This method fetches the information stored in buffered reader and 
+    separates them with spaces. The final values are assigned to its class.  
+  */
+  private List<IOInfo> setIOInfo(List<String> list) {
+    LOGGER.debug("InfromationOfCPU: setIOInfo(): starts");
+    List<IOInfo> ioInformationList = new ArrayList<>();
+    for (int i = 2; i < list.size() - 1; i++) {
+      String values = list.get(i);
+      values = values.replace(" ", ",");  values = values.replace(",,", ",");
+      values = values.replace(",,", ","); values = values.replace(",,", ",");
+      values = values.replace(",,", ","); values = values.replace(",,", ",");
+      values = values.replace(",,", ","); values = values.replace(",,", ",");
+      values = values.replace(",,", ",");
+      String ioValues[] = values.split(",");
+      IOInfo ioinfo = new IOInfo();
+      for (int j = 0; j < ioValues.length; j++) {
+        if (j % ioValues.length == 0) {
+          String Name = null;
+          String query = ioValues[j];
+          if ("da".equalsIgnoreCase(query)) {
+            Name = "sda";
+          }
+          if ("entos-root".equals(query)) {
+            Name = "centos-root";
+          }
+          if ("entos-swap".equalsIgnoreCase(query)) {
+            Name = "centos-swap";
+          }
+          if ("entos-home".equals(query)) {
+            Name = "centos-home";
+          }
+          ioinfo.setIOInformation_DISKNAME(Name);
+        }
+        if (j % ioValues.length == 1) {
+          ioinfo.setIOInformation_TRANSFERRATEPERSEC(Double.parseDouble(ioValues[j]));
+        }
+        if (j % ioValues.length == 2) {
+          ioinfo.setIOInformation_KB_READS(Double.parseDouble(ioValues[j]));
+        }
+        if (j % ioValues.length == 3) {
+          ioinfo.setIOInformation_KB_WRITES(Double.parseDouble(ioValues[j]));
+        }
+        if (j % ioValues.length == 4) {
+          ioinfo.setIOInformation_BLOCKREADS(Double.parseDouble(ioValues[j]));
+        }
+        if (j % ioValues.length == 5) {
+          ioinfo.setIOInformation_BLOCKWRITES(Double.parseDouble(ioValues[j]));
+        }
+      }
+      ioInformationList.add(ioinfo);
+    }
+    LOGGER.debug("InformationOfCPU: setIOInfo(): ends");
+    return ioInformationList;
+  }
+
   
 }
