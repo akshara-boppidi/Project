@@ -11,77 +11,77 @@ package com.mscs710.taskmanager.StatsInfo;
  */
 public class NetworkInfo {
 
-    int    NInfo_PID;
-    String NInfo_User;
-    String NInfo_Protocol;
-    double NInfo_BandWidthSent;
-    double NInfo_BandWidthReceived;
-    String NInfo_Status;
+    int    NetworkInfo_PID;
+    String NetworkInfo_User;
+    String NetworkInfo_Protocol;
+    double NetworkInfo_BandWidthSent;
+    double NetworkInfo_BandWidthReceived;
+    String NetworkInfo_Status;
 
-    /* getNInfo_Protocol */
-    /* setNInfo_Protocol*/
+    /* getNetworkInfo_Protocol */
+    /* setNetworkInfo_Protocol*/
     
-    public String getNInfo_Protocol() {
-        return NInfo_Protocol;
+    public String getNetworkInfo_Protocol() {
+        return NetworkInfo_Protocol;
     }
     
-    public void setNInfo_Protocol(String NInfo_Protocol) {
-        this.NInfo_Protocol = NInfo_Protocol;
-    }
-
-    /* getNInfo_PID */
-    /* setNInfo_PID */
-    
-    public int getNInfo_PID() {
-        return NInfo_PID;
+    public void setNetworkInfo_Protocol(String NetworkInfo_Protocol) {
+        this.NetworkInfo_Protocol = NetworkInfo_Protocol;
     }
 
-    public void setNInfo_PID(int NInfo_PID) {
-        this.NInfo_PID = NInfo_PID;
+    /* getNetworkInfo_PID */
+    /* setNetworkInfo_PID */
+    
+    public int getNetworkInfo_PID() {
+        return NetworkInfo_PID;
     }
 
-    /* getNInfo_User */
-    /* setNInfo_User */
-    
-    public String getNInfo_User() {
-        return NInfo_User;
-    }
-    
-    public void setNInfo_User(String NInfo_User) {
-        this.NInfo_User = NInfo_User;
+    public void setNetworkInfo_PID(int NetworkInfo_PID) {
+        this.NetworkInfo_PID = NetworkInfo_PID;
     }
 
-    /* getNInfo_BandWidthSent */
-    /* setNInfo_BandWidthSent */
+    /* getNetworkInfo_User */
+    /* setNetworkInfo_User */
     
-    public double getNInfo_BandWidthSent() {
-        return NInfo_BandWidthSent;
+    public String getNetworkInfo_User() {
+        return NetworkInfo_User;
     }
     
-    public void setNInfo_BandWidthSent(double NInfo_BandWidthSent) {
-        this.NInfo_BandWidthSent = NInfo_BandWidthSent;
-    }
-
-    /* getNInfo_BandWidthReceived */
-    /* setNInfo_BandWidthReceived */
-    
-    public double getNInfo_BandWidthReceived() {
-        return NInfo_BandWidthReceived;
-    }
-    
-    public void setNInfo_BandWidthReceived(double NInfo_BandWidthReceived) {
-        this.NInfo_BandWidthReceived = NInfo_BandWidthReceived;
+    public void setNetworkInfo_User(String NetworkInfo_User) {
+        this.NetworkInfo_User = NetworkInfo_User;
     }
 
-    /* getNInfo_Status */
-    /* setNInfo_Status */
+    /* getNetworkInfo_BandWidthSent */
+    /* setNetworkInfo_BandWidthSent */
     
-    public String getNInfo_Status() {
-        return NInfo_Status;
+    public double getNetworkInfo_BandWidthSent() {
+        return NetworkInfo_BandWidthSent;
     }
     
-    public void setNInfo_Status(String NInfo_Status) {
-        this.NInfo_Status = NInfo_Status;
+    public void setNetworkInfo_BandWidthSent(double NetworkInfo_BandWidthSent) {
+        this.NetworkInfo_BandWidthSent = NetworkInfo_BandWidthSent;
+    }
+
+    /* getNetworkInfo_BandWidthReceived */
+    /* setNetworkInfo_BandWidthReceived */
+    
+    public double getNetworkInfo_BandWidthReceived() {
+        return NetworkInfo_BandWidthReceived;
+    }
+    
+    public void setNetworkInfo_BandWidthReceived(double NetworkInfo_BandWidthReceived) {
+        this.NetworkInfo_BandWidthReceived = NetworkInfo_BandWidthReceived;
+    }
+
+    /* getNetworkInfo_Status */
+    /* setNetworkInfo_Status */
+    
+    public String getNetworkInfo_Status() {
+        return NetworkInfo_Status;
+    }
+    
+    public void setNetworkInfo_Status(String NetworkInfo_Status) {
+        this.NetworkInfo_Status = NetworkInfo_Status;
     }
 
     
