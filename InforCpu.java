@@ -7,6 +7,7 @@ package com.mscs710.taskmanager;
 
 import Databaseconnectivity.Database;
 import com.mscs710.taskmanager.StatsInfo.BasicInfo;
+import com.mscs710.taskmanager.StatsInfo.IOInfo;
 import com.mscs710.taskmanager.StatsInfo.NetworkInfo;
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -123,7 +124,7 @@ public class InforCpu {
     return basicInfoList;
   }
   /*
-  This method executes the command "netstat -e -p -at" at the run time and 
+  This method executes the command "netinfo -e -p -at" at the run time and 
   obtains the network information of CPU and stores it in buffered reader.
   */
    public List<NetworkInfo> networkInfo(String query) {
@@ -143,7 +144,7 @@ public class InforCpu {
         networkInformation.add(Infocpu);
       }
       List networkInformationList;
-      if ("netstat -e -p -at".equals(query)) {
+      if ("netinfo -e -p -at".equals(query)) {
         networkInformationList = setNetworkInfo(networkInformation);
       } else {
         networkInformationList = setUdpNetworkInfo(networkInformantion);
@@ -273,4 +274,38 @@ public class InforCpu {
     LOGGER.debug("InfromationOfCPU : setNetworkStats(): ends");
     return networkInformationList;
   }
+  
+  /*
+    This method executes the query "iostat -d -N" at the runtime and
+  obtains the io information of CPU and stores it in buffered reader.  
+  */
+  
+  public List<IOInfo> iOInfo(String query) {
+    LOGGER.debug("InformationOfCPU : iOInfo(): Starts ");
+    String status = "";
+    try {
+      // query will be initiated in the childthread
+      Process childthread = Runtime.getRuntime().exec(query);
+      InputStream childthreadResult = childthread.getInputStream();
+      // assigning child result to parent
+      InputStreamReader parentEntry = new InputStreamReader(childthreadResult);
+      BufferedReader readParentEntry = new BufferedReader(parentEntry);
+      String Infocpu;
+      // read the childthread Result
+      List<String> iOInfo = new ArrayList();
+      for (int i = 0; i < readParentEntry.read(); i++) {
+        Infocpu = readParentEntry.readLine();
+        iOInfo.add(Infocpu);
+      }
+      List iOInformationList = setIOInfo(iOInfo);
+      db = new Database();
+      status = db.saveIOInfo(iOInformationList);
+      LOGGER.debug("InformationOfCPU : iOStats(): Ends ");
+      return iOInformationList;
+    } catch (Exception ioinfo) {
+      LOGGER.error("InformationOfCPU : error at iOInfo()" + ioinfo.getMessage());
+      return null;
+    }
+  }
+  
 }
