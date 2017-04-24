@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Databaseconnectivity;
 
+package Databaseconnectivity;
 /**
  *
  * @author raviteja, pooja, akshara
  */
-import com.mscs710.taskmanger.StatsInfo.BasicInfo;
-import com.mscs710.taskmanger.StatsInfo.IOInfo;
-import com.mscs710.taskmanger.StatsInfo.NetworkInfo;
+
+import com.mscs710.taskmanager.StatsInfo.BasicInfo;
+import com.mscs710.taskmanager.StatsInfo.NetworkInfo;
+import com.mscs710.taskmanager.StatsInfo.IOInfo;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,6 +26,7 @@ import java.util.Date;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 public class Database {
  private static final Logger LOGGER = LoggerFactory.getLogger(Database.class);
@@ -43,7 +45,6 @@ public class Database {
       conn = DriverManager.getConnection("jdbc:sqlite:Result.db");
       String url = "jdbc:sqlite:C:/Users/akshara/Documents/project/MetricsCollector/CreateTable.sql";
       s = conn.createStatement();
-
       boolean executeDB;
       executeDB = executeDB(url, s);
     } 
@@ -54,7 +55,6 @@ public class Database {
     LOGGER.info("Database: Opened database successfully");
     LOGGER.debug("Database: Store(): Ends");
   }
-
    /**
    * To execute DB
    **/
@@ -95,15 +95,15 @@ private static boolean executeDB(String SQLFilePath, Statement s)
       String d = dateFormat.format(date);
       for (int i = 0; i < InfoList.size(); i++) {
         BasicInfo Info = InfoList.get(i);
-        String query = "INSERT INTO tblBasicInfo(PInfo_PID,PInfo_Username,PInfo_PercentageCpuUsage"
-          + "PInfo_PercentageMemUsage,PI_TIME,PI_Date)"
+        String query = "INSERT INTO tblBasicInfo(BasicInfo_PID,BasicInfo_Username,BasicInfo_PercentageCpuUsage"
+          + "BasicInfo_PercentageMemUsage,PI_TIME,PI_Date)"
           + "values(?,?,?,?,?,?)";
         PreparedStatement p = conn.prepareStatement(query);
-        p.setInt(1, Info.getPInfo_PID());
-        p.setString(2, Info.getPInfo_Username());
-        p.setDouble(3, Info.getPInfo_PercentageCpuUsage());
-        p.setDouble(4, Info.getPInfo_PercentageMemUsage());
-        p.setString(5, Info.getPInfo_TIME());
+        p.setInt(1, Info.getBasicInfo_PID());
+        p.setString(2, Info.getBasicInfo_Username());
+        p.setDouble(3, Info.getBasicInfo_PercentageCpuUsage());
+        p.setDouble(4, Info.getBasicInfo_PercentageMemUsage());
+        p.setString(5, Info.getBasicInfo_TIME());
         p.setString(6, d);
         p.executeUpdate();
       }
@@ -119,80 +119,83 @@ private static boolean executeDB(String SQLFilePath, Statement s)
    /**
    *  NetworkStats
    *
-   * @param networkStatList
+     * @param networkInformationtList
    * @return m
    */
-  public String NetworkInfo(List<NetworkInfo> networkStatList) {
+  public String NetworkInfo(List<NetworkInfo> networkInformationtList) {
    
     try {
-      LOGGER.debug("Database: NetworkStats(): Starts");
+      LOGGER.debug("Database: NetworkInfo(): Starts");
       Class.forName("org.sqlite.JDBC");
       conn = DriverManager.getConnection("jdbc:sqlite:Result.db");
-      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:MM");
-      Date date = new Date();
-      String d = dateFormat.format(date);
-      for (int i = 0; i < networkStatList.size(); i++) {
-       NetworkInfo n = networkStatList.get(i);
+      SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd HH:MM");
+      Date newdate = new Date();
+      String d = date.format(newdate);
+      for (int i = 0; i < networkInformationtList.size(); i++) {
+       NetworkInfo n = networkInformationtList.get(i);
        
-        String query = "INSERT INTO tblNetworkInfo(NInfo_PID,NI_USER,NInfo_PROTOCOL,"
-          + "NInfo_BandWidthSent,NInfo_BandWidthReceived,NInfo_STATUS,NInfo_DATE)"
+        String query = "INSERT INTO tblNetworkInfo(NetworkInfo_PID,NetworkInfo_USER,NetworkInfo_Protocol,"
+          + "NetworkInfo_BandWidthSent,NetworkInfo_BandWidthReceived,NetworkInfo_Status,NetworkInfo_DATE)"
           + "values(?,?,?,?,?,?,?)";
         PreparedStatement p = conn.prepareStatement(query);
-        p.setInt(1, n.getNInfo_PID());
-        p.setString(2, n.getNInfo_User());
-        p.setString(3, n.getNInfo_Protocol());
-        p.setDouble(4, n.getNInfo_BandWidthSent());
-        p.setDouble(5, n.getNInfo_BandWidthReceived());
-        p.setString(6, n.getNInfo_Status());
+        p.setInt(1, n.getNetworkInfo_PID());
+        p.setString(2, n.getNetworkInfo_User());
+        p.setString(3, n.getNetworkInfo_Protocol());
+        p.setDouble(4, n.getNetworkInfo_BandWidthSent());
+        p.setDouble(5, n.getNetworkInfo_BandWidthReceived());
+        p.setString(6, n.getNetworkInfo_Status());
         p.setString(7, d);
         p.executeUpdate();
       }
       m = "Success";
     } catch (SQLException | ClassNotFoundException e) {
-      LOGGER.error("Database: an exception Occured at NetworkStats()");
+      LOGGER.error("Database: an error Occured at NetworkInfo()");
       LOGGER.error(e.getMessage());
       m = e.getMessage();
     }
-    LOGGER.debug("Database: NetworkStats(): Ends");
+    LOGGER.debug("Database: NetworkInfo(): Ends");
     return m;
   }
   /**
-   * IOStats
+   * IOInfo
    *
-   * @param iOStatsList
+   * @param ioInformationList
    * @return m
    */
-  public String IOStats(List<IOInfo> iOStatsList) {
+  public String IOInfo(List<IOInfo> ioInformationList) {
     try {
-      LOGGER.debug("Database: IOStats(): Starts");
+      LOGGER.debug("Database: IOInfo(): Starts");
       Class.forName("org.sqlite.JDBC");
       conn = DriverManager.getConnection("jdbc:sqlite:Result.db");
-      SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd HH:MM");
-      Date date = new Date();
-      String d = dateFormat.format(date);
-      for (int i = 0; i < iOStatsList.size(); i++) {
-        IOInfo ioStats = iOStatsList.get(i);
+      SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd HH:MM");
+      Date newdate = new Date();
+      String d = date.format(newdate);
+      for (int i = 0; i < ioInformationList.size(); i++) {
+        IOInfo ioInfo = ioInformationList.get(i);
        
-        String query = "INSERT INTO tblIOStats(IOInfo_DISKNAME,IOInfo_TRANSFERRATEPERSEC,IOInfo_KB_READS,"
-          + "IOInfo_KB_WRITES,IOInfo_BLOCKREADS,IOInfo_BLOCKWRITES,IOInfo_DATE)"
+        String query = "INSERT INTO tblIOInfo(IOInformation_DISKNAME,IOInformation_TRANSFERRATEPERSEC,IOInformation_KB_READS,"
+          + "IOInformation_KB_WRITES,IOInformation_BLOCKREADS,IOInformation_BLOCKWRITES,IOInformation_DATE)"
           + "values(?,?,?,?,?,?,?)";
         PreparedStatement p = conn.prepareStatement(query);
-        p.setString(1, ioStats.getIOInfo_DISKNAME());
-        p.setDouble(2, ioStats.getIOInfo_TRANSFERRATEPERSEC());
-        p.setDouble(3, ioStats.getIOInfo_KB_READS());
-        p.setDouble(4, ioStats.getIOInfo_KB_WRITES());
-        p.setDouble(5, ioStats.getIOInfo_BLOCKREADS());
-        p.setDouble(6, ioStats.getIOInfo_BLOCKWRITES());
+        p.setString(1, ioInfo.getIOInformation_DISKNAME());
+        p.setDouble(2, ioInfo.getIOInformation_TRANSFERRATEPERSEC());
+        p.setDouble(3, ioInfo.getIOInformation_KB_READS());
+        p.setDouble(4, ioInfo.getIOInformation_KB_WRITES());
+        p.setDouble(5, ioInfo.getIOInformation_BLOCKREADS());
+        p.setDouble(6, ioInfo.getIOInformation_BLOCKWRITES());
         p.setString(7, d);
         p.executeUpdate();
       }
       m = "Success";
     } catch (SQLException | ClassNotFoundException e) {
-      LOGGER.error("Database: an exception Occured at IOStats() ");
+      LOGGER.error("Database: an error Occured at IOInfo() ");
       LOGGER.error(e.getMessage());
       m = e.getMessage();
     }
-    LOGGER.debug("Database: IOStats(): Ends");
+    LOGGER.debug("Database: IOInfo(): Ends");
     return m;
   }
+    public String saveBasicInfo(List basicInfoList) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
