@@ -10,11 +10,11 @@ package com.mscs710.taskmanager.StatsInfo;
  * @author raviteja, pooja, akshara
  */
 public class BasicInfo {
-    int PInfo_PID;
-    String PInfo_Usrname;
-    double PInfo_PercentageCpuUsage;
-    double PInfo_PercentageMemUsage;
-    String PInfo_TIME;
+    int BasicInfo_PID;
+    String BasicInfo_Usrname;
+    double BasicInfo_PercentageCpuUsage;
+    double BasicInfo_PercentageMemUsage;
+    String BasicInfo_TIME;
     String Date;
     
     public String getDate() {
@@ -25,59 +25,59 @@ public class BasicInfo {
     this.Date = Date;
   }
    
-   /* getPInfo_TIME */
-   /* setPInfo_TIME */
+   /* getBasicInfo_TIME */
+   /* setBasicInfo_TIME */
     
-    public String getPInfo_TIME() {
-        return PInfo_TIME;
+    public String getBasicInfo_TIME() {
+        return BasicInfo_TIME;
     }
 
-    public void setPInfo_TIME(String PInfo_TIME) {
-        this.PInfo_TIME = PInfo_TIME;
+    public void setBasicInfo_TIME(String BasicInfo_TIME) {
+        this.BasicInfo_TIME = BasicInfo_TIME;
     }    
     
-    /* getPInfo_PID */
-    /* setPInfo_PID */
+    /* getBasicInfo_PID */
+    /* setBasicInfo_PID */
   
-    public int getPInfo_PID() {
-        return PInfo_PID;
+    public int getBasicInfo_PID() {
+        return BasicInfo_PID;
     }
     
-    public void setPInfo_PID(int PInfo_PID) {
-        this.PInfo_PID = PInfo_PID;
+    public void setBasicInfo_PID(int BasicInfo_PID) {
+        this.BasicInfo_PID = BasicInfo_PID;
     }
 
-    /* getPInfo_Usrname */
-    /* setPInfo_Usrname */
+    /* getBasicInfo_Usrname */
+    /* setBasicInfo_Usrname */
     
-    public String getPInfo_Usrname() {
-        return PInfo_Usrname;
+    public String getBasicInfo_Usrname() {
+        return BasicInfo_Usrname;
     }
 
    
-    public void setPInfo_Usrname(String PInfo_Usrname) {
-        this.PInfo_Usrname = PInfo_Usrname;
+    public void setBasicInfo_Usrname(String BasicInfo_Usrname) {
+        this.BasicInfo_Usrname = BasicInfo_Usrname;
     }
 
-    /* getPInfo_PercentageCpuUsage */
-    /*setPInfo_PercentageCpuUsage*/
+    /* getBasicInfo_PercentageCpuUsage */
+    /*setBasicInfo_PercentageCpuUsage*/
     
-    public double getPInfo_PercentageCpuUsage() {
-        return PInfo_PercentageCpuUsage;
+    public double getBasicInfo_PercentageCpuUsage() {
+        return BasicInfo_PercentageCpuUsage;
     }
  
-    public void setPInfo_PercentageCpuUsage(double PInfo_PercentageCpuUsage) {
-        this.PInfo_PercentageCpuUsage = PInfo_PercentageCpuUsage;
+    public void setBasicInfo_PercentageCpuUsage(double BasicInfo_PercentageCpuUsage) {
+        this.BasicInfo_PercentageCpuUsage = BasicInfo_PercentageCpuUsage;
     }
 
-    /* getPInfo_PercentageMemUsage */
-    /* setPInfo_PercentageMemUsage */
+    /* getBasicInfo_PercentageMemUsage */
+    /* setBasicInfo_PercentageMemUsage */
     
-    public double getPInfo_PercentageMemUsage() {
-        return PInfo_PercentageMemUsage;
+    public double getBasicInfo_PercentageMemUsage() {
+        return BasicInfo_PercentageMemUsage;
     }
     
-    public void setPInfo_PercentageMemUsage(double PInfo_PercentageMemUsage) {
-        this.PInfo_PercentageMemUsage = PInfo_PercentageMemUsage;
+    public void setBasicInfo_PercentageMemUsage(double BasicInfo_PercentageMemUsage) {
+        this.BasicInfo_PercentageMemUsage = BasicInfo_PercentageMemUsage;
     }
 }
