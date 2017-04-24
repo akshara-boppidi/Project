@@ -12,7 +12,7 @@ import com.mscs710.taskmanager.StatsInfo.NetworkInfo;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class InforCpu {
    Database db;
-   private final static DateFormat date = new DateFormat("yyyy-mm-dd");
+   private final static SimpleDateFormat date = new SimpleDateFormat("yyyy-mm-dd");
    private final static Logger log = LoggerFactory.getLogger(InforCpu.class);
    
    /*
@@ -91,7 +91,7 @@ public class InforCpu {
                   if (basicValues[0].equals("")) {
                       j = j + 1;
                   }
-                  basicInfo.setBasicInfo_Usrquery(basicValues[j]);
+                  basicInfo.setBasicInfo_Usrname(basicValues[j]);
               }
                //sets percentage of CPU used.
               if (j % basicValues.length == 2) {
@@ -147,10 +147,10 @@ public class InforCpu {
       if ("netinfo -e -p -at".equals(query)) {
         networkInformationList = setNetworkInfo(networkInformation);
       } else {
-        networkInformationList = setUdpNetworkInfo(networkInformantion);
+        networkInformationList = setUdpNetworkInfo(networkInformation);
       }
       db = new Database();
-      status = db.saveNetworkInfo(networkInformationList);
+      status = db.NetworkInfo(networkInformationList);
       LOGGER.debug("InformationOfCPU : networkInfo(): ends");
       return networkInformationList;
     } catch (Exception e) {
@@ -299,7 +299,7 @@ public class InforCpu {
       }
       List iOInformationList = setIOInfo(iOInfo);
       db = new Database();
-      status = db.saveIOInfo(iOInformationList);
+      status = db.IOInfo(iOInformationList);
       LOGGER.debug("InformationOfCPU : ioinfos(): Ends ");
       return iOInformationList;
     } catch (Exception ioinfo) {
@@ -364,5 +364,4 @@ public class InforCpu {
     return ioInformationList;
   }
 
-  
 }
