@@ -182,7 +182,7 @@ public class Screen1 extends javax.swing.JFrame {
        close(); 
              
     }//GEN-LAST:event_GetSystemMetricsButtonActionPerformed
-
+    // This button helps in quitting out of the screen
     private void CancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CancelButtonActionPerformed
            // TODO add your handling code here:
             
