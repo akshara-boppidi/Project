@@ -7,7 +7,6 @@ package frames;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-//import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,7 +19,7 @@ public class Screen2 extends javax.swing.JFrame {
      */
     public Screen2() {
         initComponents();
-       showDate();
+        showDate();
        //showTime();
     }
 
@@ -34,7 +33,7 @@ public class Screen2 extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        Exit = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -46,29 +45,38 @@ public class Screen2 extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(22, 110, 22));
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 0));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(51, 51, 255));
-        jButton1.setText("Exit");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        Exit.setBackground(new java.awt.Color(255, 0, 0));
+        Exit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        Exit.setForeground(new java.awt.Color(255, 255, 255));
+        Exit.setText("Exit");
+        Exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                ExitActionPerformed(evt);
             }
         });
 
-        jTable1.setBackground(new java.awt.Color(240, 240, 240));
-        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jTable1.setBackground(java.awt.Color.lightGray);
+        jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 0), 2));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
+                { new Integer(23),  new Integer(23), null, null},
+                {null,  new Integer(55), null, null},
+                {null,  new Integer(25), null, null},
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "BasicInfo", "MemoryInfo", "IoInfo", "NetworkInfo"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jTable1.setGridColor(new java.awt.Color(51, 0, 0));
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setBackground(new java.awt.Color(255, 51, 0));
@@ -82,7 +90,7 @@ public class Screen2 extends javax.swing.JFrame {
         jLabel2.setText("Date");
 
         DateTF.setEditable(false);
-        DateTF.setBackground(new java.awt.Color(255, 204, 204));
+        DateTF.setBackground(new java.awt.Color(255, 153, 153));
         DateTF.setFont(new java.awt.Font("Tahoma", 3, 10)); // NOI18N
         DateTF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -97,12 +105,12 @@ public class Screen2 extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(77, 77, 77)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(143, 143, 143)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(142, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(101, 101, 101)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 379, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(118, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,8 +120,8 @@ public class Screen2 extends javax.swing.JFrame {
                         .addComponent(DateTF, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(23, 23, 23))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addGap(52, 52, 52))))
+                        .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(44, 44, 44))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -124,11 +132,11 @@ public class Screen2 extends javax.swing.JFrame {
                     .addComponent(DateTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(170, 170, 170)
-                .addComponent(jButton1)
-                .addGap(33, 33, 33))
+                .addGap(163, 163, 163)
+                .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -145,9 +153,10 @@ public class Screen2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         jLabel1.setText("Metrics Collector");
-    }//GEN-LAST:event_jButton1ActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_ExitActionPerformed
 
     private void DateTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateTFActionPerformed
         // TODO add your handling code here:
@@ -193,7 +202,7 @@ public class Screen2 extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField DateTF;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton Exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
