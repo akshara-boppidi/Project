@@ -7,6 +7,13 @@ package frames;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
+import org.jfree.chart.plot.PiePlot3D;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -39,6 +46,7 @@ public class Screen2 extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         DateTF = new javax.swing.JTextField();
+        Piechart = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(153, 0, 153));
@@ -59,17 +67,17 @@ public class Screen2 extends javax.swing.JFrame {
         jTable1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 0, 0), 2));
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                { new Integer(23),  new Integer(23), null, null},
-                {null,  new Integer(55), null, null},
-                {null,  new Integer(25), null, null},
-                {null, null, null, null}
+                {"process1",  new Long(9729719),  new Integer(267839), "TCP", "Listen"},
+                {"process2",  new Long(5930022),  new Integer(356118), "TCP", "Established"},
+                {"process3",  new Long(12648669),  new Integer(154132), "TCP", "Listen"},
+                {"process4",  new Long(2806211),  new Integer(131547), "UDP", "Time_Wait"}
             },
             new String [] {
-                "BasicInfo", "MemoryInfo", "IoInfo", "NetworkInfo"
+                "Process", "MemoryInfo", "IoInfo", "Protocol", "State"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+                java.lang.String.class, java.lang.Long.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -98,6 +106,16 @@ public class Screen2 extends javax.swing.JFrame {
             }
         });
 
+        Piechart.setBackground(new java.awt.Color(204, 0, 51));
+        Piechart.setFont(new java.awt.Font("Tahoma", 1, 8)); // NOI18N
+        Piechart.setForeground(new java.awt.Color(204, 255, 255));
+        Piechart.setText("Piechart");
+        Piechart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PiechartActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -122,6 +140,10 @@ public class Screen2 extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(44, 44, 44))))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(251, 251, 251)
+                .addComponent(Piechart)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,11 +152,13 @@ public class Screen2 extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(DateTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(163, 163, 163)
+                .addGap(73, 73, 73)
+                .addComponent(Piechart)
+                .addGap(67, 67, 67)
                 .addComponent(Exit, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
         );
@@ -161,6 +185,21 @@ public class Screen2 extends javax.swing.JFrame {
     private void DateTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DateTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_DateTFActionPerformed
+
+    private void PiechartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PiechartActionPerformed
+        DefaultPieDataset piedataset  = new DefaultPieDataset();
+        piedataset.setValue("Process one",new Integer(10));
+         piedataset.setValue("Process two",new Integer(20));
+          piedataset.setValue("Process three",new Integer(30));
+           piedataset.setValue("Process four",new Integer(40));
+           JFreeChart chart = ChartFactory.createPieChart("Piechart", piedataset, true,true,true);
+           PiePlot P = (PiePlot) chart.getPlot();
+           //P.setForegroundAlpha(TOP_ALIGNMENT);
+           ChartFrame frame = new ChartFrame("piechart",chart);
+           frame.setVisible(true);
+           frame.setSize(450, 500);
+           
+    }//GEN-LAST:event_PiechartActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,6 +242,7 @@ public class Screen2 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField DateTF;
     private javax.swing.JButton Exit;
+    private javax.swing.JButton Piechart;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
