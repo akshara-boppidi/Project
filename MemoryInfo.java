@@ -10,16 +10,16 @@ package com.mscs710.taskmanager.StatsInfo;
  * @author raviteja, pooja, akshara
  */
 public class MemoryInfo {
-    double MInfonfo_TotalMemory;
-    double MInfonfo_UsedMemory;
-    double MInfo_ActiveMemory;
-    double MInfo_InactiveMemory;
-    double MInfo_BufferedMemory;
-    double MInfo_SwapCache;
-    double MInfo_TotalSwap;
-    double MInfo_SystemTicks;
-    double MInfo_IdleTicks;
-    double MInfo_IOWaitTicks;
-    double MInfo_Interrupts;
-    double MInfo_BootTime;
+    double MemoryInfo_TotalMemory;
+    double MemoryInfo_UsedMemory;
+    double MemoryInfo_ActiveMemory;
+    double MemoryInfo_InactiveMemory;
+    double MemoryInfo_BufferedMemory;
+    double MemoryInfo_SwapCache;
+    double MemoryInfo_TotalSwap;
+    double MemoryInfo_SystemTicks;
+    double MemoryInfo_IdleTicks;
+    double MemoryInfo_IOWaitTicks;
+    double MemoryInfo_Interrupts;
+    double MemoryInfo_BootTime;
 }
